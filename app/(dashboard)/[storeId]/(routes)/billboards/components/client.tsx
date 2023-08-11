@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@radix-ui/react-separator";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { BillboardColumn, columns } from "./columns";
-import { DataTable } from "@/components/ui/data-table";
 
 interface BillboardClientProps {
     data: BillboardColumn[]
@@ -31,7 +31,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
 
             </div>
             <Separator />
-            <DataTable columns={columns} data={data}/>
+            <DataTable searchKey="label" columns={columns} data={data} />
         </>
     )
 }
