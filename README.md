@@ -2,6 +2,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Prisma Requirements:
+
+'''
+npm install @prisma/client
+'''
+
+https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/install-prisma-client-typescript-postgresql
+
 First, run the development server:
 
 ```bash
