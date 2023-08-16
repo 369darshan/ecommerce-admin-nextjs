@@ -14,6 +14,7 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useOrigin } from "@/hooks/use-origin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
 import axios from "axios";
@@ -23,7 +24,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import * as z from "zod";
-import { useOrigin } from "@/hooks/use-origin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -62,8 +62,10 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       setLoading(false)
     }
   }
-  const onDelete = async (data: SettingsFormValues) => {
+
+  const onDelete = async () => {
     try {
+      console.log("[onDelete]")
       setLoading(true)
       await axios.delete(`/api/stores/${params.storeId}`)
       router.refresh();
@@ -82,7 +84,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={() => { onDelete }}
+        onConfirm={onDelete}
         loading={loading}
       />
       <div className="flex items-center justify-between">

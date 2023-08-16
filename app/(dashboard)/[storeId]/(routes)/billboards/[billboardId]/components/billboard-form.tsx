@@ -81,7 +81,8 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
       setLoading(false)
     }
   }
-  const onDelete = async (data: BillboardFormValues) => {
+
+  const onDelete = async () => {
     try {
       setLoading(true)
       await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
@@ -101,7 +102,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={() => { onDelete }}
+        onConfirm={onDelete}
         loading={loading}
       />
       <div className="flex items-center justify-between">
