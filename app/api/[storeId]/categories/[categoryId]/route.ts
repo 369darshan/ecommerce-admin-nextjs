@@ -1,6 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
 //GET
 export async function GET(
@@ -16,6 +16,9 @@ export async function GET(
         const category = await prismadb.category.findUnique({
             where: {
                 id: params.categoryId,
+            },
+            include: {
+                billboard: true,
             }
         });
 
@@ -35,7 +38,7 @@ export async function PATCH(
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { name,billboardId } = body;
+        const { name, billboardId } = body;
 
         if (!userId) {
             return new NextResponse("Unauthenticated", { status: 401 });
@@ -54,13 +57,13 @@ export async function PATCH(
 
 
         const storeByuserId = await prismadb.store.findFirst({
-            where:{
+            where: {
                 id: params.storeId,
                 userId
             }
-        });  
+        });
 
-        if(!storeByuserId){
+        if (!storeByuserId) {
             return new NextResponse("Unauthorized", { status: 403 });
         }
 
@@ -86,7 +89,7 @@ export async function PATCH(
 //DELETE
 export async function DELETE(
     _req: Request,
-    { params }: { params: { storeId: string,categoryId: string } }
+    { params }: { params: { storeId: string, categoryId: string } }
 ) {
     try {
         const { userId } = auth();
@@ -100,14 +103,14 @@ export async function DELETE(
         }
 
 
-        const storeByuserId =await prismadb.store.findFirst({
-            where:{
+        const storeByuserId = await prismadb.store.findFirst({
+            where: {
                 id: params.storeId,
                 userId
             }
-        });  
+        });
 
-        if(!storeByuserId){
+        if (!storeByuserId) {
             return new NextResponse("Unauthorized", { status: 403 });
         }
 
